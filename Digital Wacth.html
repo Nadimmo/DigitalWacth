@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Wacth</title>
+    <style>
+        body{
+            background-color: white;
+        }
+        .mywacth{
+            width: 400px;
+            height: 250px;
+            margin: auto;
+            text-align: center;
+            top: 0;
+            left:0 ;
+            right: 0;
+            bottom: 0;
+            position: fixed;
+            padding:50px;
+            border-radius: 20px;
+            background-color:hsl(2,4,6);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          
+        }
+        span{
+            font-size: 50px;
+        }
+        .H:hover{
+            border: 2px solid black;
+            background-color: orange;
+            cursor: pointer;
+        }
+        .M:hover{
+            border: 2px solid black;
+            background-color: lightcoral;
+            cursor: pointer;
+        }
+        .date:hover{
+            border: 2px solid black;
+            background-color: green;
+            cursor: pointer;
+        }
+        @property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+body {
+  background: #000;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+.moving-border {
+  width: 400px;
+  height: 250px;
+  position: relative;
+  background: #111;
+  padding: 4px;
+}
+.moving-border::before,
+.moving-border::after {
+  content: "";
+  position: absolute;
+  inset: -0.2rem;
+  z-index: -1;
+  background: linear-gradient(var(--angle), 
+    #032146,  #C3F2FF, #b00);
+  animation: rotate 10s linear infinite;
+}
+.moving-border::after {
+  filter: blur(10px);
+}
+@keyframes rotate {
+  0%     { --angle: 0deg; }
+  100%   { --angle: 360deg;
+  }
+}
+    
+    </style>
+
+
+
+
+</head>
+<body>
+    <div class="moving-border"></div>
+    <div class="mywacth">
+        <span class="H"> </span>
+        <span class="M"> </span> <br>
+        <span class="date"> </span>
+    </div>
+    
+
+
+
+
+
+    <script>
+        function myTime(){
+            var myDate = new Date();
+            var hr,min = (myDate.getMinutes() < 10 )? "0" + myDate.getMinutes():myDate.getMinutes(),
+                sec = (myDate.getSeconds() < 10 )? "0" + myDate.getSeconds():myDate.getSeconds(),
+                M = (myDate.getHours() >= 12)? "PM":"AM";
+
+            if(myDate.getHours() == 0){
+                hr = 12;
+
+            }else if(myDate.getHours() > 12){
+                hr = myDate.getHours() -12;
+
+            }
+            else{
+               hr =  myDate.getHours()
+            }
+
+            var currentTime = hr +":"+min+":"+sec+":";
+            document.getElementsByClassName("H")[0].innerHTML = currentTime;
+            document.getElementsByClassName("M")[0].innerHTML = M;
+            
+            var myDay = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satarday"],
+            myMonth = ["January","February","March","April","May","June","July","August","September","October","November","December"],
+            day = myDate.getDate()
+
+        var currentDate = myDay[myDate.getDay()] + "," + myMonth[myDate.getMonth()] + day;
+        document.getElementsByClassName("date")[0].innerHTML = currentDate;
+
+
+        }
+        myTime()
+        setInterval(function(){
+            myTime();
+        },1000);
+    </script>
+</body>
+</html>
